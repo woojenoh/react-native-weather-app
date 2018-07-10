@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  ActivityIndicator
+} from "react-native";
 import Weather from "./Weather";
 
 const API_KEY = "RNbWK8JmYTusL87Gz";
@@ -70,6 +76,7 @@ export default class App extends Component {
           />
         ) : (
           <View style={styles.loading}>
+            <ActivityIndicator size={60} color="black" />
             <Text style={styles.loadingText}>Getting the Weather</Text>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
@@ -90,12 +97,11 @@ const styles = StyleSheet.create({
   },
   loading: {
     flex: 1,
-    backgroundColor: "#FDF6AA",
-    justifyContent: "flex-end",
-    paddingLeft: 25
+    justifyContent: "center",
+    alignItems: "center"
   },
   loadingText: {
-    fontSize: 35,
-    marginBottom: 40
+    fontSize: 30,
+    marginTop: 40
   }
 });

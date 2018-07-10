@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
   upper: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 100
   },
   cityName: {
     fontSize: 40,
