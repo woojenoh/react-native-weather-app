@@ -5,61 +5,68 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
 const weatherCases = {
-  Rain: {
-    colors: ["#00C6FB", "#005BEA"],
-    title: "Rain",
-    icon: "weather-rainy"
-  },
-  Clear: {
+  "01": {
     colors: ["#FEF253", "#FF7300"],
     title: "Sunny",
     icon: "weather-sunny"
   },
-  Thunderstorm: {
-    colors: ["#00ECBC", "#007ADF"],
-    title: "Thunderstorm",
-    icon: "weather-lightning"
-  },
-  Clouds: {
+  "02": {
     colors: ["#D7D2CC", "#304352"],
     title: "Clouds",
     icon: "weather-cloudy"
   },
-  Snow: {
+  "03": {
+    colors: ["#D7D2CC", "#304352"],
+    title: "Scattered Clouds",
+    icon: "weather-cloudy"
+  },
+  "04": {
+    colors: ["#D7D2CC", "#304352"],
+    title: "Broken Clouds",
+    icon: "weather-cloudy"
+  },
+  "09": {
+    colors: ["#00C6FB", "#005BEA"],
+    title: "Shower Rain",
+    icon: "weather-rainy"
+  },
+  "10": {
+    colors: ["#00C6FB", "#005BEA"],
+    title: "Rain",
+    icon: "weather-rainy"
+  },
+  "11": {
+    colors: ["#00ECBC", "#007ADF"],
+    title: "Thunderstorm",
+    icon: "weather-lightning"
+  },
+  "13": {
     colors: ["#7DE2FC", "#B9B6E5"],
     title: "Snow",
     icon: "weather-snowy"
   },
-  Drizzel: {
-    colors: ["#89F7FE", "#66A6FF"],
-    title: "Drizzel",
-    icon: "weather-hail"
-  },
-  Haze: {
-    colors: ["#89F7FE", "#66A6FF"],
-    title: "Haze",
-    icon: "weather-windy"
-  },
-  Mist: {
+  "50": {
     colors: ["#89F7FE", "#66A6FF"],
     title: "Mist",
     icon: "weather-fog"
   }
 };
 
-function Weather({ weatherName, temp }) {
+function Weather({ weatherName, temperature, cityName, aqi }) {
   return (
     <LinearGradient
       colors={weatherCases[weatherName].colors}
       style={styles.container}
     >
       <View style={styles.upper}>
+        <Text style={styles.cityName}>{cityName}</Text>
         <MaterialCommunityIcons
           color="white"
           size={144}
           name={weatherCases[weatherName].icon}
         />
-        <Text style={styles.temp}>{temp}℃</Text>
+        <Text style={styles.temperature}>temp: {temperature}℃</Text>
+        <Text style={styles.temperature}>aqi: {aqi}</Text>
       </View>
       <View style={styles.lower}>
         <Text style={styles.title}>{weatherCases[weatherName].title}</Text>
@@ -70,7 +77,7 @@ function Weather({ weatherName, temp }) {
 }
 
 Weather.propTypes = {
-  temp: PropTypes.number.isRequired,
+  temperature: PropTypes.number.isRequired,
   weatherName: PropTypes.string.isRequired
 };
 
@@ -83,7 +90,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  temp: {
+  cityName: {
+    fontSize: 40,
+    color: "white",
+    marginBottom: 10
+  },
+  temperature: {
     fontSize: 35,
     color: "white",
     marginTop: 10

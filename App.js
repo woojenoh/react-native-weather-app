@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import Weather from "./Weather";
 
-const API_KEY = "08b4a78d744b87cc8dce76648b04492f";
+const API_KEY = "RNbWK8JmYTusL87Gz";
 
 export default class App extends Component {
   state = {
     isLoaded: false,
     error: null,
     temperature: null,
-    name: null
+    weatherName: null,
+    cityName: null,
+    aqi: null
   };
 
   componentDidMount() {
@@ -27,25 +29,45 @@ export default class App extends Component {
 
   _getWeather = (lat, lon) => {
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}`
+      `http://api.airvisual.com/v2/nearest_city?lat=${lat}&lon=${lon}&key=${API_KEY}`
     )
       .then(response => response.json())
       .then(json => {
+        console.log(json);
+        console.log("---");
+        console.log(json.data.city);
+        console.log(json.data.current.weather.tp);
+        console.log(json.data.current.weather.ic.substring(0, 2));
+        console.log(json.data.current.pollution.aqicn);
         this.setState({
-          temperature: json.main.temp,
-          name: json.weather[0].main,
+          cityName: json.data.city,
+          temperature: json.data.current.weather.tp,
+          weatherName: json.data.current.weather.ic.substring(0, 2),
+          aqi: json.data.current.pollution.aqicn,
           isLoaded: true
         });
       });
   };
 
   render() {
-    const { isLoaded, error, temperature, name } = this.state;
+    const {
+      isLoaded,
+      error,
+      temperature,
+      weatherName,
+      cityName,
+      aqi
+    } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
         {isLoaded ? (
-          <Weather weatherName={name} temp={Math.ceil(temperature - 273.15)} />
+          <Weather
+            weatherName={weatherName}
+            temperature={temperature}
+            cityName={cityName}
+            aqi={aqi}
+          />
         ) : (
           <View style={styles.loading}>
             <Text style={styles.loadingText}>Getting the Weather</Text>
